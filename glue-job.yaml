@@ -5,8 +5,8 @@ Resources:
   SampleGlueJob:
     Type: AWS::Glue::Job
     Properties:
-      Name: sample-glue-etl-job
-      Role: arn:aws:iam::123456789012:role/GlueServiceRole
+      Name: glue-test-role
+      Role: arn:aws:iam::730335353052:role/glue-test-role
       Command:
         Name: pythonshell
         PythonVersion: "3.9"
