@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS Glue Job Template for ETL Processing'
+
+Resources:
+  SampleGlueJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: sample-glue-etl-job
+      Role: arn:aws:iam::123456789012:role/GlueServiceRole
+      Command:
+        Name: pythonshell
+        PythonVersion: "3.9"
+        ScriptLocation: s3://your-bucket/scripts/sample_job.py
+      DefaultArguments:
+        "--enable-metrics": "true"
+        "--enable-continuous-cloudwatch-log": "true"
+        "--job-language": "python"
+        "--input-bucket": "source-data-bucket"
+        "--output-bucket": "processed-data-bucket"
+      Description: "Sample Glue ETL job for testing CodePipeline"
+      ExecutionProperty:
+        MaxConcurrentRuns: 1
+      GlueVersion: "3.0"
+      MaxRetries: 2
+      Timeout: 2880
+      NumberOfWorkers: 2
+      WorkerType: "G.1X"
+      Tags:
+        Environment: Dev
+        Project: DataPipeline
+
+Outputs:
+  GlueJobName:
+    Description: The name of the created Glue job
+    Value: !Ref SampleGlueJob 
